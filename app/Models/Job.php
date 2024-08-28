@@ -13,6 +13,7 @@ class Job extends Model
     'title',
     'category_id',
     'job_type_id',
+    'user_id',
     'vacancy',
     'salary',
     'location',
@@ -25,5 +26,13 @@ class Job extends Model
     'main_branch',
     'website',
 ];
+  public function jobType() {
+    return $this->belongsTo(JobType::class);
+    
+  }
+  public function categoryType() {
+    return $this->belongsTo(Category::class);
+    
+  }
 
 }

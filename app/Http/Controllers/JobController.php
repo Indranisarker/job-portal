@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Job;
 use App\Models\JobType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
@@ -42,6 +43,7 @@ class JobController extends Controller
                 'title' => $request->title,
                 'category_id' => $request->category,
                 'job_type_id' => $request->jobType,
+                'user_id' => Auth::user()->id,
                 'vacancy' => $request->vacancy,
                 'salary' => $request->salary,
                 'location' => $request->location,
@@ -70,7 +72,10 @@ class JobController extends Controller
     }
      //show posted job lists page
      public function showJobLists(){
-        return view('frontend.jobs.job-lists');
+        $jobs = JOb::where('user_id',Auth::user()->id)->with('jobType')->paginate(8);
+        return view('frontend.jobs.job-lists',[
+            'jobs' => $jobs
+        ]);
     }
     
 }

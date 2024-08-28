@@ -65,6 +65,9 @@ class UserController extends Controller
            if(Auth::attempt(['email'=> $request->email, 'password' => $request->password])){
                 return redirect()->route('home');
            }
+           if (Auth::check()) {
+            $userId = Auth::user()->id;
+        } 
            else{
             return redirect()-> route('user.showLoginForm')-> with('error', 'Invalid username or password');
            }
