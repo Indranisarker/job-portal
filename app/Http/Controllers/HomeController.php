@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -9,11 +10,9 @@ class HomeController extends Controller
 
     //this method render the home page
     public function index(){
-        return view('frontend.home');
-    }
-
-    //this method render the contact page
-    public function contact(){
-        return view('frontend.contact');
+        $categories = Category::orderBy('category_name', 'ASC')->where('status', 1)->get();
+        return view('frontend.home', [
+            'categories' => $categories,
+        ]);
     }
 }

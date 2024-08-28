@@ -26,10 +26,11 @@
                 <div class="col-md-3 mb-3 mb-sm-3 mb-lg-0">
                     <select name="category" id="category" class="form-control">
                         <option value="">Select a Category</option>
-                        <option value="">Engineering</option>
-                        <option value="">Accountant</option>
-                        <option value="">Information Technology</option>
-                        <option value="">Fashion designing</option>
+                        @if($categories->isNotEmpty())
+                                @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                @endforeach
+                        @endif
                     </select>
                 </div>
                 

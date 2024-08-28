@@ -24,20 +24,40 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ms-0 ms-sm-0 me-auto mb-2 mb-lg-0 ms-lg-4">
 					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="index.html">Home</a>
+						<a class="nav-link" aria-current="page" href="{{ route('home') }}">Home</a>
 					</li>	
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="jobs.html">Find Jobs</a>
 					</li>	
                     <li class="nav-item">
-						<a class="nav-link" aria-current="page" href="jobs.html">Employers</a>
-					</li>
-                    <li class="nav-item">
 						<a class="nav-link" aria-current="page" href="jobs.html">About Us</a>
 					</li>									
-				</ul>				
-				<a class="btn me-4" style=" border: 2px solid rgb(53, 169, 169); color:#212529; background-color:transparent" href="login.html" type="submit">Login</a></button>
-				<a class="btn" href="post-job.html" type="submit">Post a Job</a>
+				</ul>	
+				@guest
+				<!-- Show login button when not authenticated -->
+				<a class="btn me-4" style=" border: 2px solid rgb(53, 169, 169); color:#212529; background-color:transparent" href="{{ route('user.showLoginForm') }}" type="submit">Login</a>
+			@else
+				<!-- Show user logo with dropdown when authenticated -->
+				<li class="dropdown">
+					<a href="#" data-toggle="dropdown">
+						<img src="{{ asset('/profile-images/1-1724828088.jpg') }}" alt="User Logo" class="user-logo">
+						{{-- {{ Auth::user()->name }}<span class="caret"></span> --}}
+					</a>
+					<ul class="dropdown-menu" style="text-align: center">
+						<li><a href="{{ route('user.profile') }}"> My Profile</a></li>
+						<li>
+							<a href="{{ route('logout') }}"
+							   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+							    Logout
+							</a>
+							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+								@csrf
+							</form>
+						</li>
+					</ul>
+				</li>
+			@endguest			
+				<a class="btn" href="{{ route('jobs.showJobPostForm') }}" type="submit">Post a Job</a>
 			</div>
 		</div>
 	</nav>
@@ -51,13 +71,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="profilePicForm" name="profilePicForm" action="" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Profile Image</label>
                 <input type="file" class="form-control" id="image"  name="image">
+				<div id="imageError" class="invalid-feedback"></div>
             </div>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary mx-3">Update</button>
+                <button type="submit" class="btn mx-3">Update</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
             
@@ -77,14 +98,59 @@
 <script src="{{ asset('assets/js/instantpages.5.1.0.min.js') }}"></script>
 <script src="{{ asset('assets/js/lazyload.17.6.0.min.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
+<script>
+// Ensure that the AJAX setup is done correctly for CSRF token
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+// Submit the profile picture form using AJAX
+$(document).ready(function() {
+$("#profilePicForm").submit(function (e) {
+    e.preventDefault();
+	console.log("Form submitted");
+    // Clear previous errors
+    $('.is-invalid').removeClass('is-invalid');
+    $('.invalid-feedback').html('');
+
+    // Create a FormData object to handle file uploads
+    var formData = new FormData(this);
+
+    $.ajax({
+        url: '{{ route("user.changeProfilePicture") }}', // Update with your route
+        method: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === false) {
+                var errors = response.errors;
+
+                // Handle image errors
+                if (errors.image) {
+                    $("#image").addClass('is-invalid');
+                    $("#imageError").html(errors.image[0]);
+                }
+            } else {
+				window.location.href = '{{ url()->current() }}'
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('AJAX error:', textStatus, errorThrown); // Debugging
+            $('#message').html('<p>There was an error with your request.</p>');
+        }
+    });
+});
+});
+
+</script>
 @yield('customJS')
 @yield('loginJS')
-<script>
-	$.ajaxSetup({
-	    headers: {
-	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	    }
-	});
-</script>
+@yield('UserJS')
+@yield('JobPostJS')
+
 </body>
 </html>

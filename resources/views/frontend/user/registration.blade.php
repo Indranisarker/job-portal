@@ -10,17 +10,17 @@
                     <h4 style="color: #212529">Register</h4>
                     <form action="" name="registrationForm" id="registrationForm">
                         <div class="mb-2">
-                            <label for="name" class="mb-2">Name*</label>
+                            <label for="name" class="mb-2">Name<span class="req">*</span></label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
                             <div id="nameError" class="invalid-feedback"></div>
                         </div> 
                         <div class="mb-2">
-                            <label for="email" class="mb-2">Email*</label>
+                            <label for="email" class="mb-2">Email<span class="req">*</span></label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
                             <div id="emailError" class="invalid-feedback"></div>
                         </div> 
                         <div class="mb-2">
-                            <label for="phone_no" class="mb-2">Phone No*</label>
+                            <label for="phone_no" class="mb-2">Phone No<span class="req">*</span></label>
                             <input type="text" name="phone_no" id="phone_no" class="form-control" placeholder="Enter Phone Number">
                             <div id="phone_noError" class="invalid-feedback"></div>
                         </div> 
@@ -29,12 +29,12 @@
                             <input type="text" name="designation" id="designation" class="form-control" placeholder="Enter Designation">
                         </div> 
                         <div class="mb-2">
-                            <label for="password" class="mb-2">Password*</label>
+                            <label for="password" class="mb-2">Password<span class="req">*</span></label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
                             <div id="passwordError" class="invalid-feedback"></div>
                         </div> 
                         <div class="mb-2">
-                            <label for="" class="mb-2">Confirm Password*</label>
+                            <label for="" class="mb-2">Confirm Password<span class="req">*</span></label>
                             <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Please Confirm The Password">
                             <div id="confirm_passwordError" class="invalid-feedback"></div>
                         </div> 
@@ -42,7 +42,7 @@
                     </form>                    
                 </div>
                 <div class="mt-4 text-center">
-                    <p>Have an account? <a  href="login.html" style="color:  rgb(53, 169, 169)">Login</a></p>
+                    <p>Have an account? <a  href="{{ route('user.showLoginForm') }}" style="color:  rgb(53, 169, 169)">Login</a></p>
                 </div>
             </div>
         </div>
