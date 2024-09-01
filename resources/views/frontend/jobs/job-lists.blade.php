@@ -8,7 +8,7 @@
                 <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="#" style="color: rgb(53, 169, 169)">Home</a></li>
-                        <li class="breadcrumb-item active">List of jobs</li>
+                        <li class="breadcrumb-item active">List of posted jobs</li>
                     </ol>
                 </nav>
             </div>
@@ -18,6 +18,11 @@
                 @include('frontend.layouts.sidebar')
             </div>
             <div class="col-lg-9">
+                @if(Session::has('success'))
+                <div class="alert alert-success" id="success-alert">
+                    <p class="mb-0 pt-0">{{ Session::get('success') }}</p>
+                </div>
+            @endif
                 <div class="card border-0 shadow mb-4 p-3">
                     <div class="card-body card-form">
                         <div class="d-flex justify-content-between">
@@ -61,13 +66,15 @@
                                         </td>
                                         <td>
                                             <div class="action-dots float-end">
-                                                <a href="#" class="" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button href="#" class="" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                </a>
+                                                </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="job-detail.html"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Remove</a></li>
+                                                    <li><a class="dropdown-item" href="{{ route('jobs.jobDetails', $job->id) }}"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
+                                                    <li><a class="dropdown-item" href="{{ route('jobs.editJobDetails', $job->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteJob({{ $job->id }})">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i> Remove
+                                                    </a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -86,4 +93,33 @@
         </div>
     </div>
 </section>
+@endsection
+@section('JobPostJS')
+<script>
+    $(document).ready(function(){
+        setTimeout(function() {
+            $('#success-alert').fadeOut('slow', function() {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+    function deleteJob(jobId) {
+    if (confirm("Are you sure you want to delete this job?")) {
+        $.ajax({
+            url: '/jobs/delete/' + jobId,
+            type: 'DELETE',
+            data: {
+                "_token": "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr) {
+                alert('Error: ' + xhr.statusText);
+            }
+        });
+    }
+}
+
+</script>
 @endsection

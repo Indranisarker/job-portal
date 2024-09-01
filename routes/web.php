@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
+//public route
 Route::get('/',[HomeController::class, 'index'])->name('home'); // route the homeController class with it's method
+Route::get('/find-jobs',[HomeController::class, 'findAllJobs'])->name('findAllJobs');
+
+//user authentication and manage profile
 Route::get('/user/registration',[UserController::class, 'showRegistrationForm'])->name('user.showRegistrationForm');
 Route::post('/user/save-user',[UserController::class, 'processRegistration'])->name('user.processRegistration');
 Route::get('/user/login',[UserController::class, 'showLoginForm'])->name('user.showLoginForm');
@@ -29,6 +29,12 @@ Route::get('/user/profile', [UserController::class, 'profile'])->name('user.prof
 Route::put('/user/update-profile', [UserController::class, 'updateProfile'])->name('user.updateProfile');
 Route::post('/user/update-picture', [UserController::class, 'changeProfilePicture'])->name('user.changeProfilePicture');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+//jobs create and manage jobs
 Route::get('/jobs/post-jobs',[JobController::class, 'showJobPostForm'])->name('jobs.showJobPostForm');
 Route::post('/jobs/create', [JobController::class, 'createJob'])->name('jobs.createJob');
 Route::get('/jobs/lists', [JobController::class, 'showJobLists'])->name('jobs.showJobLists');
+Route::get('/jobs/job-details/{id}', [JobController::class, 'jobDetails'])->name('jobs.jobDetails');
+Route::get('/jobs/edit-job-details/{id}', [JobController::class, 'editJobDetails'])->name('jobs.editJobDetails');
+Route::post('/jobs/update/{id}', [JobController::class, 'updateJob'])->name('jobs.updateJob');
+Route::delete('/jobs/delete/{id}', [JobController::class, 'deleteJob'])->name('jobs.deleteJob');
