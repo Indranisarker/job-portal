@@ -8,7 +8,7 @@
             <div class="col">
                 <nav aria-label="breadcrumb" class=" rounded-3 p-3">
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('jobs.showJobLists') }}" style="color: rgb(53, 169, 169)"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp;Back to Jobs</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('findAllJobs') }}" style="color: rgb(53, 169, 169)"><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp;Back to Jobs</a></li>
                     </ol>
                 </nav>
             </div>
@@ -17,6 +17,17 @@
     <div class="container job_details_area">
         <div class="row pb-5">
             <div class="col-md-8">
+                @if(Session::has('success'))
+                <div class="alert alert-success" id="success-alert">
+                    <p class="mb-0 pt-0">{{ Session::get('success') }}</p>
+                </div>
+            @endif
+
+            @if(Session::has('errors'))
+                <div class="alert alert-danger" id="success-alert">
+                    <p class="mb-0 pt-0">{{ Session::get('errors') }}</p>
+                </div>
+            @endif
                 <div class="card shadow border-0">
                     <div class="job_details_header">
                         <div class="single_jobs white-bg d-flex justify-content-between">
@@ -75,7 +86,13 @@
                         <div class="border-bottom"></div>
                         <div class="pt-3 text-end">
                             <a href="#" class="btn btn-secondary mx-3">Save</a>
-                            <a href="#" class="btn">Apply</a>
+                            @if(Auth::check())
+                                <a href="#" class="btn" onclick="applyJob({{ $job->id }})">Apply</a>
+                            @else
+                                <a href="javascript.void(0)" class="btn disabled">Login to Apply</a>
+                            @endif
+                           
+
                         </div>
                     </div>
                 </div>
@@ -115,4 +132,33 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('customJS')
+    <script>
+         $(document).ready(function(){
+        setTimeout(function() {
+            $('#success-alert').fadeOut('slow', function() {
+                $(this).remove();
+            });
+        }, 3000);
+    });
+        function applyJob(id){
+            if(confirm('Are you sure you want to apply for this job?')){
+                $.ajax({
+                    url: '{{ route("jobs.applyJob") }}',
+                    type: 'post',
+                    data: {
+                id: id,
+                _token: '{{ csrf_token() }}' // Include CSRF token
+            },
+                    dataType: 'json',
+                    success: function(response){
+                        window.location.reload();
+                    }
+                })
+            }
+
+        }
+    </script>
 @endsection

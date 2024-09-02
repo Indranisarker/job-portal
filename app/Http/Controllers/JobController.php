@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\JobType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -166,5 +167,97 @@ class JobController extends Controller
         $job->delete();
         session()->flash('success', 'Job Deleted Successfully!');
     }
+
+    //apply a job 
+    public function applyJob(Request $request){
+        $id = $request->id;
+        $job = Job::where('id', $id)->first();
+
+        //job is not present in db
+        if($job == null){
+            session()->flash('errors', 'Job does not exists!');
+            return response()->json([
+                'status' => false,
+                'message' => 'Job does not exists'
+            ]);
+        }
+
+        // a user can't apply on his own job
+        $recruiter_id  = $job->user_id;
+        if($recruiter_id == Auth::user()->id){
+            session()->flash('errors', 'A recruiter can not apply on his own job post');
+            return response()->json([
+                'status' => false,
+                'message' => 'A recruiter can not apply on his own job post'
+            ]);
+        }
+
+        // a user can not apply for a job multiple times
+        $jobApplicationCount = JobApplication::where([
+            'user_id' => Auth::user()->id,
+            'job_id' => $id
+        ])->count();
+
+        if($jobApplicationCount > 0){
+            session()->flash('errors', 'You have already applied for this job.');
+            return response()->json([
+                'status' => false,
+                'message' => 'You have already applied for this job.'
+            ]);
+        }
+
+        $application = new JobApplication();
+        $application -> job_id = $id;
+        $application -> user_id =  Auth::user()->id;
+        $application -> recruiter_id = $recruiter_id;
+        $application -> applied_date = now();
+        $application -> save();
+
+        session()->flash('success', 'Applied Succesfully');
+        return response()->json([
+            'status' => true,
+            'message' => 'Applied Succesfully'
+        ]);
+        
+    }
+
+    public function showAppliedJobs(){
+        $applied_jobs = JobApplication::where('user_id', Auth::user()->id)
+         -> with('job', 'job.jobType', 'job.applications')
+          -> paginate(8);
+        return view('frontend.jobs.applied-jobs', [
+            'applied_jobs' => $applied_jobs
+        ]);
+    }
+    //remove a job from the applied job lists
+    public function removeJob(Request $request)
+    {
+        // Find the job application for the logged-in user
+        $jobApplication = JobApplication::where([
+            'job_id' => $request->id,
+            'user_id' => Auth::user()->id,
+        ])->first();
+    
+        // Check if the job application exists
+        if (!$jobApplication) {
+            session()->flash('errors', 'Job Application is not found');
+            return response()->json([
+                'status' => false,
+                'message' => 'Job Application is not found'
+            ]);
+        }
+    
+        // Delete the job application
+        // JobApplication::find($request->id)->delete();
+        $jobApplication->delete();
+    
+        // Flash a success message and redirect the user
+        session()->flash('success', 'Job Removed Successfully');
+        return response()->json([
+            'status' => true,
+            'message' => 'Job Removed Successfully'
+        ]);
+    }
+    
     
 }

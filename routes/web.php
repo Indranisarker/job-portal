@@ -38,3 +38,8 @@ Route::get('/jobs/job-details/{id}', [JobController::class, 'jobDetails'])->name
 Route::get('/jobs/edit-job-details/{id}', [JobController::class, 'editJobDetails'])->name('jobs.editJobDetails');
 Route::post('/jobs/update/{id}', [JobController::class, 'updateJob'])->name('jobs.updateJob');
 Route::delete('/jobs/delete/{id}', [JobController::class, 'deleteJob'])->name('jobs.deleteJob');
+
+//apply for a job and show
+Route::post('/apply-job', [JobController::class, 'applyJob'])->name('jobs.applyJob');
+Route::get('/applied-jobs', [JobController::class, 'showAppliedJobs'])->name('jobs.showAppliedJobs');
+Route::post('/remove-job/{id}', [JobController::class, 'removeJob'])->name('jobs.removeJob');

@@ -40,7 +40,7 @@
 				<!-- Show user logo with dropdown when authenticated -->
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown">
-						<img src="{{ asset('/profile-images/1-1724828088.jpg') }}" alt="User Logo" class="user-logo">
+						<img src="{{ Auth::user()->image ? asset('/profile-images/' . Auth::user()->image) : asset('/profile-images/default.jpg') }}" alt="User Logo" class="user-logo">
 						{{-- {{ Auth::user()->name }}<span class="caret"></span> --}}
 					</a>
 					<ul class="dropdown-menu" style="text-align: center">
