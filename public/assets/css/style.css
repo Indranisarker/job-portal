@@ -9293,7 +9293,7 @@ button.btn-secondary, .btn.btn-secondary {
 }
 button.btn-secondary:hover, button.btn-secondary:focus, .btn.btn-secondary:hover, .btn.btn-secondary:focus {
   border: 2px solid #A8DF8E;
-  background: #A8DF8E;
+  background: rgb(53, 169, 169);
   color: #ffffff;
 }
 button.btn-outline-primary, .btn.btn-outline-primary {
@@ -9449,16 +9449,16 @@ header .navbar-brand {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  color: #0ed300;
+  color: rgb(53, 169, 169);
   font-size: 14px;
   line-height: 40px;
   text-align: center;
   display: inline-block;
-  background: #EFFDF5;
+  background: rgb(53, 169, 169);
   margin-right: 15px;
 }
 .section-3 .job_listing_area .job_lists .single_jobs .jobs_right .apply_now a.heart_mark:hover {
-  background: #00D363;
+  background: rgb(53, 169, 169);
   color: #fff;
 }
 .section-4 .job_details_area .job_sumary .summery_header {

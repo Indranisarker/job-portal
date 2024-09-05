@@ -41,5 +41,8 @@ Route::delete('/jobs/delete/{id}', [JobController::class, 'deleteJob'])->name('j
 
 //apply for a job and show
 Route::post('/apply-job', [JobController::class, 'applyJob'])->name('jobs.applyJob');
+Route::post('/saved-job', [JobController::class, 'savedJobs'])->name('jobs.savedJobs');
 Route::get('/applied-jobs', [JobController::class, 'showAppliedJobs'])->name('jobs.showAppliedJobs');
+Route::get('/saved-jobs-lists', [JobController::class, 'showSavedJobs'])->name('jobs.showSavedJobs');
 Route::post('/remove-job/{id}', [JobController::class, 'removeJob'])->name('jobs.removeJob');
+Route::post('/remove-save-job/{id}', [JobController::class, 'removeSavedJob'])->name('jobs.removeSavedJob');

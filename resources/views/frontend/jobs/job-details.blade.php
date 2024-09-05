@@ -49,7 +49,7 @@
                             </div>
                             <div class="jobs_right">
                                 <div class="apply_now">
-                                    <a class="heart_mark" href="#"> <i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                    <a href="javascript:void(0)" class="heart_mark" onclick="saveJob({{ $job->id }})"> <i class="fa fa-heart-o" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,11 @@
                         </div>
                         <div class="border-bottom"></div>
                         <div class="pt-3 text-end">
-                            <a href="#" class="btn btn-secondary mx-3">Save</a>
+                            @if(Auth::check())
+                                <a href="#" onclick="saveJob({{ $job->id }})" class="btn btn-secondary mx-3">Save</a>
+                            @else
+                                <a href="javascript.void(0)" class="btn btn-secondary mx-3 disabled">Login to Save</a>
+                            @endif
                             @if(Auth::check())
                                 <a href="#" class="btn" onclick="applyJob({{ $job->id }})">Apply</a>
                             @else
@@ -160,5 +164,19 @@
             }
 
         }
+        function saveJob(id){
+                $.ajax({
+                    url: '{{ route("jobs.savedJobs") }}',
+                    type: 'post',
+                    data: {
+                    id: id,
+                _token: '{{ csrf_token() }}' // Include CSRF token
+            },
+                    dataType: 'json',
+                    success: function(response){
+                        window.location.reload();
+                    }
+                })
+            }
     </script>
 @endsection

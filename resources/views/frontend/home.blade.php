@@ -16,12 +16,13 @@
 <section class="section-1 py-5 "> 
     <div class="container">
         <div class="card border-0 shadow p-5">
+            <form action="{{ route('findAllJobs') }}" method="GET">
             <div class="row">
                 <div class="col-md-3 mb-3 mb-sm-3 mb-lg-0">
-                    <input type="text" class="form-control" name="search" id="search" placeholder="Keywords">
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Keywords">
                 </div>
                 <div class="col-md-3 mb-3 mb-sm-3 mb-lg-0">
-                    <input type="text" class="form-control" name="search" id="search" placeholder="Location">
+                    <input type="text" class="form-control" name="location" id="location" placeholder="Location">
                 </div>
                 <div class="col-md-3 mb-3 mb-sm-3 mb-lg-0">
                     <select name="category" id="category" class="form-control">
@@ -32,15 +33,15 @@
                                 @endforeach
                         @endif
                     </select>
-                </div>
-                
+                </div>   
                 <div class=" col-md-3 mb-xs-3 mb-sm-3 mb-lg-0">
                     <div class="d-grid gap-2">
-                        <a href="jobs.html" class="btn btn-block">Search</a>
+                        <button type="submit" class="btn btn-block">Search</button>
                     </div>
                     
                 </div>
-            </div>            
+            </div>  
+        </form>          
         </div>
     </div>
 </section>
@@ -53,7 +54,7 @@
                 @foreach ($categories as $category)
                     <div class="col-lg-4 col-xl-3 col-md-6">
                         <div class="single_catagory" >
-                            <a href="jobs.html"><h4 class="pb-2">{{ $category->category_name }}</h4></a>
+                            <a href="{{ route('findAllJobs').'?category='.$category->id }}"><h4 class="pb-2">{{ $category->category_name }}</h4></a>
                             <p class="mb-0"> <span>0</span> Available position</p>
                         </div>
                     </div>
