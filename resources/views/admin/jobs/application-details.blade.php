@@ -28,7 +28,7 @@
                             <p>Applicant Phone No : {{ $application->user->phone_no }}</p>
                             <p>Application Date : {{ \Carbon\Carbon::parse($application->applied_date)->format('d M, Y') }}</p>
                             <p>Applied for : {{ $application->job->title }} position</p>
-                           <p> Download CV : <a href="" style="color: blue"> {{ $application->cv }}</a></p>
+                           <p> Download CV : <a href="" onclick="alert('Download complete')" style="color: blue"> {{ $application->cv }}</a></p>
                         </div>
                     </div>
                 </div>
