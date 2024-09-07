@@ -172,65 +172,75 @@ class JobController extends Controller
     }
 
     //apply a job 
-    public function applyJob(Request $request){
+    public function applyJob(Request $request)
+    {
         $request->validate([
             'cv' => 'required|mimes:pdf,doc,docx|max:2048',
         ]);
     
+        $cvPath = null; // Initialize the CV path
+    
         // Store CV file
         if ($request->hasFile('cv')) {
             $cvPath = $request->file('cv')->store('cvs', 'public');
+        } else {
+            session()->flash('error', 'CV upload failed');
+            return response()->json([
+                'status' => false,
+                'message' => 'CV upload failed'
+            ]);
         }
+    
+        // Continue with your existing logic
         $id = $request->id;
         $job = Job::where('id', $id)->first();
-
-        //job is not present in db
-        if($job == null){
-            session()->flash('errors', 'Job does not exists!');
+    
+        if ($job == null) {
+            session()->flash('error', 'Job does not exist');
             return response()->json([
                 'status' => false,
                 'message' => 'Job does not exists'
             ]);
         }
-
-        // a user can't apply on his own job
-        $recruiter_id  = $job->user_id;
-        if($recruiter_id == Auth::user()->id){
-            session()->flash('errors', 'A recruiter can not apply on his own job post');
+    
+        $recruiter_id = $job->user_id;
+        if ($recruiter_id == Auth::user()->id) {
+            session()->flash('error', 'A recruiter cannot apply for their own job');
             return response()->json([
                 'status' => false,
-                'message' => 'A recruiter can not apply on his own job post'
+                'message' => 'A recruiter cannot apply for their own job'
             ]);
         }
-
-        // a user can not apply for a job multiple times
+    
         $jobApplicationCount = JobApplication::where([
             'user_id' => Auth::user()->id,
             'job_id' => $id
         ])->count();
-
-        if($jobApplicationCount > 0){
-            session()->flash('errors', 'You have already applied for this job.');
+    
+        if ($jobApplicationCount > 0) {
+            session()->flash('error', 'You have already applied for this job.');
             return response()->json([
                 'status' => false,
                 'message' => 'You have already applied for this job.'
             ]);
         }
-
+    
         $application = new JobApplication();
-        $application -> job_id = $id;
-        $application -> user_id =  Auth::user()->id;
-        $application -> recruiter_id = $recruiter_id;
-        $application -> applied_date = now();
-        $application -> cv = $cvPath;
-        $application -> save();
-
-        session()->flash('success', 'Applied Succesfully');
+        $application->job_id = $id;
+        $application->user_id = Auth::user()->id;
+        $application->recruiter_id = $recruiter_id;
+        $application->applied_date = now();
+        $application->cv = $cvPath; // Save the uploaded CV path
+        $application->save();
+    
+        session()->flash('success', 'Applied Successfully!');
         return response()->json([
             'status' => true,
-            'message' => 'Applied Succesfully'
-        ]); 
+            'message' => 'Applied Successfully!'
+        ]);
     }
+    
+    
 
     public function showAppliedJobs(){
         $applied_jobs = JobApplication::where('user_id', Auth::user()->id)

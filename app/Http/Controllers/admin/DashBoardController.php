@@ -137,4 +137,12 @@ class DashBoardController extends Controller
         $application->delete();
         session()->flash('success', 'Job Application Deleted Successfully!');
     }
+    //show application details
+    public function applicationDetails(Request $request){
+        $id = $request->id;
+        $application = JobApplication::with('user', 'job')->find($id);
+        return view('admin.jobs.application-details',[
+            'application' => $application
+        ]);
+    }
 }

@@ -58,6 +58,7 @@
                                                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                 </a>
                                                 <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="{{ route('admin.applicationDetails', $applicant->id) }}"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
                                                     <a class="dropdown-item" href="javascript:void(0);" onclick="deleteJob({{ $applicant->id }})">
                                                         <i class="fa fa-trash" aria-hidden="true"></i> Delete
                                                     </a>

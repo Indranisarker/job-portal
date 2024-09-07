@@ -31,6 +31,7 @@ Route::group(['middleware' => 'checkRole'], function(){
     Route::delete('/delete-job/{id}', [DashBoardController::class, 'deleteJob'])->name('admin.deleteJob');
     Route::get('/job-applicants',[DashBoardController::class, 'showJobApplicants'])->name('admin.showJobApplicants');
     Route::delete('/delete-application/{id}', [DashBoardController::class, 'deleteApplications'])->name('admin.deleteApplications');
+    Route::get('/application-details/{id}',[DashBoardController::class, 'applicationDetails'])->name('admin.applicationDetails');
 });
 
 

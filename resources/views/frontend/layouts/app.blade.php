@@ -65,8 +65,6 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- <p style="margin-top: 20px">{{ Auth::user()->name }}</p> --}}
-                
                     @if(Auth::user()->role == 'admin')
                         <!-- Show 'Post a Job' button for admin users -->
                         <a class="btn me-4" href="{{ route('jobs.showJobPostForm') }}" type="submit">Post a Job</a>
@@ -111,20 +109,26 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form id="applyJobForm" method="POST" enctype="multipart/form-data">
+            <form id="applyJobForm" action="{{ route('jobs.applyJob') }}" method="POST" enctype="multipart/form-data">
                 @csrf <!-- Include CSRF token for security -->
+                <!-- Hidden field for Job ID -->
+                @isset($job)
+                <input type="hidden" name="id" value="{{ $job->id }}">
+                @endisset
+            
                 <!-- CV Upload field -->
                 <div class="mb-3">
                     <label for="cv" class="form-label">Upload CV</label>
                     <input type="file" class="form-control" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
                 </div>
-
+            
                 <!-- Submit button -->
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn mx-3">Upload</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
+            
         </div>
       </div>
     </div>
@@ -186,30 +190,7 @@ $("#profilePicForm").submit(function (e) {
         }
     });
 });
-$('#applyJobForm').submit(function(e) {
-            e.preventDefault();
-
-            // Create FormData object for file upload
-            var formData = new FormData(this);
-
-            $.ajax({
-                url: '{{ route("jobs.applyJob") }}', // Define your route here
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    alert('Application submitted successfully!');
-                    $('#applyJobModal').modal('hide');
-                    $('#applyJobForm')[0].reset();
-                },
-                error: function(xhr) {
-                    alert('Error: ' + xhr.statusText);
-                }
-            });
-        });
 });
-
 </script>
 @yield('customJS')
 @yield('loginJS')
