@@ -16,15 +16,24 @@
             <li class="list-group-item d-flex justify-content-between p-3">
                 <a href="{{ route('user.profile') }}">Account Settings</a>
             </li>
+            @auth
+            @if(Auth::user()->role == 'admin')
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('jobs.showJobPostForm') }}">Post a Job</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('jobs.showJobLists') }}">My Posted Jobs</a>
             </li>
+            @endif
+            @endauth
+
+            @auth
+            @if(Auth::user()->role == 'user')
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('jobs.showAppliedJobs') }}">Jobs Applied</a>
             </li>
+            @endif
+            @endauth
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('jobs.showSavedJobs') }}">Saved Jobs</a>
             </li>                                                        

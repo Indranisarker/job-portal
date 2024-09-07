@@ -25,6 +25,8 @@ class Job extends Model
     'company_name',
     'main_branch',
     'website',
+    'isFeatured',
+    'status'
 ];
   public function jobType() {
     return $this->belongsTo(JobType::class);
@@ -37,6 +39,11 @@ class Job extends Model
 
   public function applications(){
       return $this->hasMany(JobApplication::class);
+  }
+
+  public function user() {
+    return $this->belongsTo(User::class);
+    
   }
 
 }

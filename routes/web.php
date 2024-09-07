@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\UserController;
@@ -19,6 +20,19 @@ use Illuminate\Support\Facades\Route;
 //public route
 Route::get('/',[HomeController::class, 'index'])->name('home'); // route the homeController class with it's method
 Route::get('/find-jobs',[HomeController::class, 'findAllJobs'])->name('findAllJobs');
+
+//Dashboard 
+Route::group(['middleware' => 'checkRole'], function(){
+    Route::get('/admin/dashboard',[DashBoardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/user-lists',[DashBoardController::class, 'fetchUser'])->name('admin.fetchUser');
+    Route::get('/job-lists',[DashBoardController::class, 'jobs'])->name('admin.jobs');
+    Route::get('/edit-job/{id}',[DashBoardController::class, 'editJob'])->name('admin.editJob');
+    Route::post('/update-job/{id}',[DashBoardController::class, 'updateJob'])->name('admin.editJob');
+    Route::delete('/delete-job/{id}', [DashBoardController::class, 'deleteJob'])->name('admin.deleteJob');
+    Route::get('/job-applicants',[DashBoardController::class, 'showJobApplicants'])->name('admin.showJobApplicants');
+    Route::delete('/delete-application/{id}', [DashBoardController::class, 'deleteApplications'])->name('admin.deleteApplications');
+});
+
 
 //user authentication and manage profile
 Route::get('/user/registration',[UserController::class, 'showRegistrationForm'])->name('user.showRegistrationForm');

@@ -96,6 +96,9 @@
                             </div>
                         </div> 
                         @endforeach
+                        <div class="col md-12">
+                            {{ $jobs->withQueryString()->links() }}
+                        </div>
                     @endif                  
                     </div>
                     </div>

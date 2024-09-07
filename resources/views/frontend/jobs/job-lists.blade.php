@@ -56,7 +56,7 @@
                                                 {{ $job->location }}</div>
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($job->created_at)->format('d M, Y') }}</td>
-                                        <td>13 Applications</td>
+                                        <td>{{ $job->applications->count() }}</td>
                                         <td>
                                             @if($job->status == 1)
                                                 <div class="job-status text-capitalize">Active</div>
@@ -66,9 +66,9 @@
                                         </td>
                                         <td>
                                             <div class="action-dots float-end">
-                                                <button href="#" class="" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <a href="#" class="" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                </button>
+                                                </a>
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li><a class="dropdown-item" href="{{ route('jobs.jobDetails', $job->id) }}"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
                                                     <li><a class="dropdown-item" href="{{ route('jobs.editJobDetails', $job->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>

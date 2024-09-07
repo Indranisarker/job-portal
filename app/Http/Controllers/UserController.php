@@ -63,7 +63,13 @@ class UserController extends Controller
 
         if($validator -> passes()){
            if(Auth::attempt(['email'=> $request->email, 'password' => $request->password])){
+            if(Auth::user()->role == 'admin'){
+                return view('admin.dashboard');
+            }
+            else{
                 return redirect()->route('home');
+            }
+                
            }
            if (Auth::check()) {
             $userId = Auth::user()->id;

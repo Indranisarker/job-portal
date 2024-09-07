@@ -10,6 +10,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dashboard.css') }}" />
 	<!-- Fav Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="#" />
 </head>
@@ -22,42 +23,56 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav ms-0 ms-sm-0 me-auto mb-2 mb-lg-0 ms-lg-4">
-					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="{{ route('home') }}">Home</a>
-					</li>	
-					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="{{ route('findAllJobs') }}">Find Jobs</a>
-					</li>	
+                <ul class="navbar-nav ms-0 ms-sm-0 me-auto mb-2 mb-lg-0 ms-lg-4">
+                    @auth
+                        @if(Auth::user()->role == 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{{ route('admin.dashboard') }}">Home</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{{ route('home') }}">Home</a>
+                            </li>
+                        @endif
+                    @endauth
                     <li class="nav-item">
-						<a class="nav-link" aria-current="page" href="jobs.html">About Us</a>
-					</li>									
-				</ul>	
-				@guest
-				<!-- Show login button when not authenticated -->
-				<a class="btn me-4" style=" border: 2px solid rgb(53, 169, 169); color:#212529; background-color:transparent" href="{{ route('user.showLoginForm') }}" type="submit">Login</a>
-			@else
-				<!-- Show user logo with dropdown when authenticated -->
-				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">
-						<img src="{{ Auth::user()->image ? asset('/profile-images/' . Auth::user()->image) : asset('/profile-images/default.jpg') }}" alt="User Logo" class="user-logo">
-						{{-- {{ Auth::user()->name }}<span class="caret"></span> --}}
-					</a>
-					<ul class="dropdown-menu" style="text-align: center">
-						<li><a href="{{ route('user.profile') }}"> My Profile</a></li>
-						<li>
-							<a href="{{ route('logout') }}"
-							   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-							    Logout
-							</a>
-							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-								@csrf
-							</form>
-						</li>
-					</ul>
-				</li>
-			@endguest			
-				<a class="btn" href="{{ route('jobs.showJobPostForm') }}" type="submit">Post a Job</a>
+                        <a class="nav-link" aria-current="page" href="{{ route('findAllJobs') }}">Find Jobs</a>
+                    </li>  
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="jobs.html">About Us</a>
+                    </li>                                    
+                </ul>
+                
+                @guest
+                    <!-- Show login/signup buttons when not authenticated -->
+                    <a class="btn me-4" style="border: 2px solid rgb(53, 169, 169); color:#212529; background-color:transparent" href="{{ route('user.showRegistrationForm') }}" type="submit">Sign Up</a>
+                    <a class="btn" href="{{ route('user.showLoginForm') }}" type="submit">Login</a>
+                @else
+                    <!-- Show user logo with dropdown when authenticated -->
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown">
+                            <img src="{{ Auth::user()->image ? asset('/profile-images/' . Auth::user()->image) : asset('/profile-images/default.jpg') }}" alt="User Logo" class="user-logo">
+                        </a>
+                        <ul class="dropdown-menu" style="text-align: center">
+                            <li><a href="{{ route('user.profile') }}"> My Profile</a></li>
+                            <li>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- <p style="margin-top: 20px">{{ Auth::user()->name }}</p> --}}
+                
+                    @if(Auth::user()->role == 'admin')
+                        <!-- Show 'Post a Job' button for admin users -->
+                        <a class="btn me-4" href="{{ route('jobs.showJobPostForm') }}" type="submit">Post a Job</a>
+                    @endif
+                @endguest
+                
 			</div>
 		</div>
 	</nav>

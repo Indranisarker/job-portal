@@ -1,6 +1,13 @@
 @extends('frontend.layouts.app')
 
 @section('main')
+<div class="text center">
+@if(Session::has('errors'))
+                <div class="alert alert-danger" id="success-alert">
+                    <p class="mb-0 pt-0">{{ Session::get('errors') }}</p>
+                </div>
+            @endif
+        </div>
 <section class="section-0 lazy d-flex bg-image-style dark align-items-center" data-bg="{{ asset('assets/images/job portal.jpg') }}">
     <div class="container">
         <div class="row">
@@ -155,4 +162,15 @@
         </div>
     </div>
 </section>
+@endsection
+@section('customJS')
+<script>
+    $(document).ready(function(){
+        setTimeout(function() {
+            $('#success-alert').fadeOut('slow', function() {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+</script>
 @endsection

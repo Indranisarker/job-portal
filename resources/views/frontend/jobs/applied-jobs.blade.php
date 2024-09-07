@@ -59,16 +59,16 @@
                                         <td>{{ $applied_job->job->applications->count() }} Applications</td>
                                         <td>
                                             @if($applied_job->job->status == 1)
-                                                <div class="job-status text-capitalize">Active</div>
+                                                <p class="text-success">Active</p>
                                             @else
-                                                <div class="job-status text-capitalize">Not accepting applications</div>
+                                                <p class="text-danger">Block</p>
                                             @endif
                                         </td>
                                         <td>
                                             <div class="action-dots float-end">
-                                                <button href="#" class="" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <a href="#" class="" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                </button>
+                                                </a>
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li><a class="dropdown-item" href="{{ route('jobs.jobDetails', $applied_job->job->id) }}"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
                                                     <li><a class="dropdown-item" href="javascript:void(0);" onclick="removeJob({{ $applied_job->job->id }})">
@@ -78,13 +78,13 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @else
-                                        <tr>
-                                            <td colspan="5">
-                                                No Job Apllications is found
-                                            </td>
-                                        </tr>
                                     @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="5">
+                                            No Job Apllications is found
+                                        </td>
+                                    </tr>
                                 @endif
                                 </tbody> 
                             </table>

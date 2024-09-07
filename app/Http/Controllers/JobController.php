@@ -92,8 +92,7 @@ class JobController extends Controller
     }
 
     //edit job details
-    public function editJobDetails(Request $request, $id){
-        //$job = Job::find(Auth::user()->id,$id)->first();
+    public function editJobDetails($id){
         $job = Job::where([
             'user_id' => Auth::user()->id,
             'id' => $id
