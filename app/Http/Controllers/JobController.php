@@ -173,6 +173,14 @@ class JobController extends Controller
 
     //apply a job 
     public function applyJob(Request $request){
+        $request->validate([
+            'cv' => 'required|mimes:pdf,doc,docx|max:2048',
+        ]);
+    
+        // Store CV file
+        if ($request->hasFile('cv')) {
+            $cvPath = $request->file('cv')->store('cvs', 'public');
+        }
         $id = $request->id;
         $job = Job::where('id', $id)->first();
 
@@ -214,6 +222,7 @@ class JobController extends Controller
         $application -> user_id =  Auth::user()->id;
         $application -> recruiter_id = $recruiter_id;
         $application -> applied_date = now();
+        $application -> cv = $cvPath;
         $application -> save();
 
         session()->flash('success', 'Applied Succesfully');

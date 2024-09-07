@@ -15,7 +15,16 @@ use Illuminate\Support\Facades\Validator;
 class DashBoardController extends Controller
 {
     public function index(){
-        return view('admin.dashboard');
+        $totalJobs = Job::count();
+        $totalAppliedJobs = JobApplication::count();
+        $totalMembers = User::count();
+        $topCompanies = Job::distinct('company_name')->count('company_name');
+        return view('admin.dashboard',[
+            'totalJobs' => $totalJobs,
+            'totalAppliedJobs' => $totalAppliedJobs,
+            'totalMembers' => $totalMembers,
+            'topCompanies' => $topCompanies
+        ]);
     }
 
     //fetch user in admin panel

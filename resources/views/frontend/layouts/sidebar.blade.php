@@ -32,11 +32,11 @@
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('jobs.showAppliedJobs') }}">Jobs Applied</a>
             </li>
-            @endif
-            @endauth
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('jobs.showSavedJobs') }}">Saved Jobs</a>
-            </li>                                                        
+            </li>  
+            @endif
+            @endauth                                                      
         </ul>
     </div>
 </div>

@@ -12,7 +12,14 @@ class HomeController extends Controller
 
     //this method render the home page
     public function index(){
-            $categories = Category::orderBy('category_name', 'ASC')->where('status', 1)->with('jobs')->take(8)->get();
+            $categories = Category::orderBy('category_name', 'ASC')
+            ->where('status', 1)
+            ->withCount(['jobs' => function($query) {
+                $query->where('status', 1)->where('vacancy', '>', 0); // Only count jobs with vacancies
+            }])
+            ->take(8)
+            ->get();
+    
 
             $featuredJobs = Job::where('status', 1)->
             orderBy('created_at', 'DESC') -> 
@@ -23,12 +30,10 @@ class HomeController extends Controller
             orderBy('created_at', 'DESC') ->
             with('jobType')-> take(6) -> get();
 
-           // $totalVacancies = $categories->jobs->sum('vacancy');
         return view('frontend.home', [
             'categories' => $categories,
             'featuredJobs' => $featuredJobs,
             'latestJobs' => $latestJobs,
-            // 'totalVacancies' => $totalVacancies
         ]);
     }
 

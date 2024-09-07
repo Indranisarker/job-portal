@@ -49,7 +49,7 @@
                             </div>
                             <div class="jobs_right">
                                 <div class="apply_now">
-                                    <a href="javascript:void(0)" class="heart_mark" onclick="saveJob({{ $job->id }})"> <i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                    <a href="javascript:void(0)"  onclick="saveJob({{ $job->id }})"> <i class="fa fa-heart-o"  style="color:rgb(53, 169, 169) " aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,8 @@
                                 <a href="javascript.void(0)" class="btn btn-secondary mx-3 disabled">Login to Save</a>
                             @endif
                             @if(Auth::check())
-                                <a href="#" class="btn" onclick="applyJob({{ $job->id }})">Apply</a>
+                                {{-- <a href="#" class="btn" onclick="applyJob({{ $job->id }})">Apply</a> --}}
+                                <button data-bs-toggle="modal" data-bs-target="#applyModel" type="button" class="btn">Apply</button>
                             @else
                                 <a href="javascript.void(0)" class="btn disabled">Login to Apply</a>
                             @endif
@@ -147,23 +148,45 @@
             });
         }, 3000);
     });
-        function applyJob(id){
-            if(confirm('Are you sure you want to apply for this job?')){
-                $.ajax({
-                    url: '{{ route("jobs.applyJob") }}',
-                    type: 'post',
-                    data: {
-                id: id,
-                _token: '{{ csrf_token() }}' // Include CSRF token
-            },
-                    dataType: 'json',
-                    success: function(response){
-                        window.location.reload();
-                    }
-                })
-            }
+        // function applyJob(id){
+        //     if(confirm('Are you sure you want to apply for this job?')){
+        //         $.ajax({
+        //             url: '{{ route("jobs.applyJob") }}',
+        //             type: 'post',
+        //             data: {
+        //         id: id,
+        //         _token: '{{ csrf_token() }}' // Include CSRF token
+        //     },
+        //             dataType: 'json',
+        //             success: function(response){
+        //                 window.location.reload();
+        //             }
+        //         })
+        //     }
 
-        }
+        // }
+        // $('#applyJobForm').submit(function(e) {
+        //     e.preventDefault();
+
+        //     // Create FormData object for file upload
+        //     var formData = new FormData(this);
+
+        //     $.ajax({
+        //         url: '{{ route("jobs.applyJob") }}', // Define your route here
+        //         type: 'POST',
+        //         data: formData,
+        //         contentType: false,
+        //         processData: false,
+        //         success: function(response) {
+        //             alert('Application submitted successfully!');
+        //             $('#applyJobModal').modal('hide');
+        //             $('#applyJobForm')[0].reset();
+        //         },
+        //         error: function(xhr) {
+        //             alert('Error: ' + xhr.statusText);
+        //         }
+        //     });
+        // });
         function saveJob(id){
                 $.ajax({
                     url: '{{ route("jobs.savedJobs") }}',

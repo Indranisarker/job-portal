@@ -23,35 +23,35 @@
                         <div class="card text-center shadow-sm p-3 mb-4">
                             <img src="{{ asset('assets/images/job icon.png') }}" alt="" style="width: 60px; height:60px; margin-left:80px; margin-bottom:10px">
                             <p class="h5">Total Jobs Posted</p>
-                            <p>1250+</p>
+                            <p>{{ $totalJobs }}+</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card text-center shadow-sm p-3 mb-4">
-                            <img src="{{ asset('assets/images/applied job.png') }}" alt="" style="width: 60px; height:60px; margin-left:80px; margin-bottom:10px">
+                            <img src="{{ asset('assets/images/job applied.png') }}" alt="" style="width: 60px; height:60px; margin-left:80px; margin-bottom:10px">
                             <p class="h5">Total Jobs Applied</p>
-                            <p>5386+</p>
+                            <p>{{ $totalAppliedJobs }}+</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card text-center shadow-sm p-3 mb-4">
                             <img src="{{ asset('assets/images/top companies.png') }}" alt="" style="width: 60px; height:60px; margin-left:80px; margin-bottom:10px">
                             <p class="h5">Top Companies</p>
-                            <p>165+</p>
+                            <p>{{ $topCompanies }}+</p>
                         </div>
                     </div>
                     <div class="col-md-4" style="margin-left: 140px">
                         <div class="card text-center shadow-sm p-3 mb-4">
-                            <img src="{{ asset('assets/images/top companies.png') }}" alt="" style="width: 60px; height:60px; margin-left:80px; margin-bottom:10px">
-                            <p class="h5">Total Employees</p>
-                            <p>165+</p>
+                            <img src="{{ asset('assets/images/users.png') }}" alt="" style="width: 60px; height:60px; margin-left:80px; margin-bottom:10px">
+                            <p class="h5">Total Members</p>
+                            <p>{{ $totalMembers }}+</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card text-center shadow-sm p-3 mb-4">
-                            <img src="{{ asset('assets/images/top companies.png') }}" alt="" style="width: 60px; height:60px; margin-left:80px; margin-bottom:10px">
+                            <img src="{{ asset('assets/images/ratings.png') }}" alt="" style="width: 60px; height:60px; margin-left:80px; margin-bottom:10px">
                             <p class="h5">Ratings</p>
-                            <p>165+</p>
+                            <p>5</p>
                         </div>
                     </div>
                 </div>
