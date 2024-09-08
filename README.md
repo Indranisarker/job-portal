@@ -19,7 +19,7 @@ This project is a job portal system designed to connect recruiters (admins) with
   - View and manage jobs posted by the recruiter
 - **Profile Management**: Admins can manage their profile details.
 
-### Job Seeker Role (Normal User)
+### Job Seeker Role
 - **Job Search**: Search for jobs using filters like:
   - Job category
   - Location
