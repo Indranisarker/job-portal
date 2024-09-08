@@ -37,10 +37,4 @@ This project is a job portal system designed to connect recruiters (admins) with
 - **Popular Categories**: Showcases jobs from popular categories.
 - **Latest Jobs**: Displays recently posted job listings.
 
-## Installation
-
-To run this project locally, follow these steps:
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-repo/job-portal.git
+To know more details, click here (https://github.com/Indranisarker/job-portal.git)
