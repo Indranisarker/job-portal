@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* Colours */
-/* Fonts */
+/* Fats */
 /* Bootstrap Styles */
 :root {
   --bs-white: #fff;
@@ -116,7 +116,6 @@ p {
 .dropdown:hover .dropdown-menu {
   display: block;
 }
-
 abbr[title], abbr[data-bs-original-title] {
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;

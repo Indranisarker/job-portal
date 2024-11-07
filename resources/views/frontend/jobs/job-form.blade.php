@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app');
+@extends('frontend.layouts.app')
 
 @section('main')
 <section class="section-5 bg-2">

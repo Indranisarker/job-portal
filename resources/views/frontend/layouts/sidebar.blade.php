@@ -14,15 +14,21 @@
     <div class="card-body p-0">
         <ul class="list-group list-group-flush ">
             <li class="list-group-item d-flex justify-content-between p-3">
-                <a href="{{ route('user.profile') }}">Account Settings</a>
+                <a href="{{ route('user.profile') }}" style="color: black; text-decoration: none;" 
+                onmouseover="this.style.color='rgb(53, 169, 169)'" 
+                onmouseout="this.style.color='black'">Account Settings</a>
             </li>
             @auth
             @if(Auth::user()->role == 'admin')
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <a href="{{ route('jobs.showJobPostForm') }}">Post a Job</a>
+                <a href="{{ route('jobs.showJobPostForm') }}" style="color: black; text-decoration: none;" 
+                onmouseover="this.style.color='rgb(53, 169, 169)'" 
+                onmouseout="this.style.color='black'">Post a Job</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <a href="{{ route('jobs.showJobLists') }}">My Posted Jobs</a>
+                <a href="{{ route('jobs.showJobLists') }}" style="color: black; text-decoration: none;" 
+                onmouseover="this.style.color='rgb(53, 169, 169)'" 
+                onmouseout="this.style.color='black'">My Posted Jobs</a>
             </li>
             @endif
             @endauth
@@ -30,10 +36,14 @@
             @auth
             @if(Auth::user()->role == 'user')
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <a href="{{ route('jobs.showAppliedJobs') }}">Jobs Applied</a>
+                <a href="{{ route('jobs.showAppliedJobs') }}" style="color: black; text-decoration: none;" 
+                onmouseover="this.style.color='rgb(53, 169, 169)'" 
+                onmouseout="this.style.color='black'">Jobs Applied</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <a href="{{ route('jobs.showSavedJobs') }}">Saved Jobs</a>
+                <a href="{{ route('jobs.showSavedJobs') }}" style="color: black; text-decoration: none;" 
+                onmouseover="this.style.color='rgb(53, 169, 169)'" 
+                onmouseout="this.style.color='black'">Saved Jobs</a>
             </li>  
             @endif
             @endauth                                                      

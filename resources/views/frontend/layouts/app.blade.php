@@ -54,9 +54,14 @@
                             <img src="{{ Auth::user()->image ? asset('/profile-images/' . Auth::user()->image) : asset('/profile-images/default.jpg') }}" alt="User Logo" class="user-logo">
                         </a>
                         <ul class="dropdown-menu" style="text-align: center">
-                            <li><a href="{{ route('user.profile') }}"> My Profile</a></li>
+                            <li><a href="{{ route('user.profile') }}" style="color: black; text-decoration: none;" 
+                                onmouseover="this.style.color='rgb(53, 169, 169)'" 
+                                onmouseout="this.style.color='black'"> My Profile</a></li>
                             <li>
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a href="{{ route('logout') }}" style="color: black; text-decoration: none;" 
+                                onmouseover="this.style.color='rgb(53, 169, 169)'" 
+                                onmouseout="this.style.color='black'"
+                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
